@@ -1,23 +1,58 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "My Laravel API",
-        "description": "Swagger auto-generated docs",
+        "title": "api-starter-kit",
+        "description": "Api starter kit. Created by Muxtorov Tulqin.",
+        "termsOfService": "https://example.com/terms",
+        "contact": {
+            "name": "Support Team",
+            "url": "https://example.com/support",
+            "email": "support@example.com"
+        },
+        "license": {
+            "name": "MIT License",
+            "url": "https://opensource.org/licenses/MIT"
+        },
         "version": "1.0.0"
     },
+    "servers": [
+        {
+            "url": "http://localhost:8015",
+            "description": "Local HTTP Server"
+        },
+        {
+            "url": "https://api.example.com",
+            "description": "Production HTTPS Server"
+        }
+    ],
     "paths": {
         "/api/v1/users/all": {
             "get": {
                 "tags": [
                     "Users"
                 ],
-                "summary": "Get all users",
+                "summary": "Get users list",
                 "operationId": "300a732536223d938057e4c50eb1cb03",
                 "responses": {
                     "200": {
                         "description": "Successful operation"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "Bearer": {
+                "type": "http",
+                "description": "Use JWT Bearer Token in the Authorization header. Format: Bearer {your-token}",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
             }
         }
     },

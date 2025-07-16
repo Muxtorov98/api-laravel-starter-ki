@@ -10,13 +10,6 @@ use App\Services\Contracts\UserServiceInterface;
 use Illuminate\Http\JsonResponse;
 use OpenApi\Annotations as OA;
 
-/**
- * @OA\Info(
- *     version="1.0.0",
- *     title="My Laravel API",
- *     description="Swagger auto-generated docs"
- * )
- */
 class UserController extends BaseApiController
 {
     /**
@@ -39,8 +32,9 @@ class UserController extends BaseApiController
     /**
      * @OA\Get(
      *     path="/api/v1/users/all",
-     *     summary="Get all users",
+     *     summary="Get users list",
      *     tags={"Users"},
+     *     security={{"Bearer":{}}},
      *     @OA\Response(
      *         response=200,
      *         description="Successful operation"
