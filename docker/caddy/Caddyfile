@@ -1,0 +1,32 @@
+{
+    # Umumiy sozlamalar
+    http_port 8070
+    https_port 443
+    log {
+        output file /var/log/caddy/caddy.log
+    }
+}
+
+http://localhost:8070 {
+    root * /var/www/html/frontend/web
+    encode gzip
+    file_server
+
+    # PHP FastCGI bilan ishlash
+    php_fastcgi php:9000
+
+    # Access log sozlamalari
+    log {
+        output file /var/log/caddy/access.log
+        format json
+    }
+
+    # Cache-Control va xavfsizlik sarlavhalari
+    header {
+        Cache-Control "public, max-age=31536000, immutable"
+        Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+        X-Content-Type-Options "nosniff"
+        X-Frame-Options "DENY"
+        X-XSS-Protection "1; mode=block"
+    }
+}
