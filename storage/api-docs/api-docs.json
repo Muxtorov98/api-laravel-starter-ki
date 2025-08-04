@@ -458,10 +458,62 @@
                     }
                 ]
             }
+        },
+        "/api/v1/users/change-password": {
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Change user password",
+                "operationId": "512bf90f92a1895cb37333136723e4ce",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ChangePasswordRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Password changed successfully"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                }
+            }
         }
     },
     "components": {
         "schemas": {
+            "ChangePasswordRequest": {
+                "title": "Change Password Request",
+                "required": [
+                    "username",
+                    "password",
+                    "password_confirmation"
+                ],
+                "properties": {
+                    "username": {
+                        "description": "User's username",
+                        "type": "string"
+                    },
+                    "password": {
+                        "description": "New password",
+                        "type": "string",
+                        "format": "password"
+                    },
+                    "password_confirmation": {
+                        "description": "New password confirmation",
+                        "type": "string",
+                        "format": "password"
+                    }
+                },
+                "type": "object"
+            },
             "UserCreateRequest": {
                 "required": [
                     "name",

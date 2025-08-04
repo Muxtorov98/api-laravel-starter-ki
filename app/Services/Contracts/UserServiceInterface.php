@@ -25,4 +25,5 @@ interface UserServiceInterface extends BaseServiceInterface
     public function deleteUser(int $id): bool;
 
     public function getActiveUsers(): Collection;
+    public function changePassword(array $data): void;
 }

@@ -98,4 +98,16 @@ class UserService extends BaseService implements UserServiceInterface
     {
         return $this->userRepository->getActiveUsers();
     }
+
+
+    public function changePassword(array $data): void
+    {
+        $user = $this->userRepository->get(['username' => $data['username']]);
+
+        if (!$user) {
+            throw new ModelNotFoundException('User not found');
+        }
+
+        $this->userRepository->update($user->id, ['password' => bcrypt($data['password'])]);
+    }
 }

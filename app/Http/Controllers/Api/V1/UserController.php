@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Api\BaseApiController;
+use App\Http\Requests\Api\V1\Auth\ChangePasswordRequest;
 use App\Http\Requests\Api\V1\UserStoreRequest;
 use App\Http\Requests\Api\V1\UserUpdateRequest;
 use App\Http\Resources\Api\User\UserResource;
@@ -185,5 +186,29 @@ class UserController extends BaseApiController
     {
         $users = $this->userService->getActiveUsers();
         return $this->successResponse(UserResource::collection($users));
+    }
+    /**
+     * @OA\Post(
+     *     path="/api/v1/users/change-password",
+     *     summary="Change user password",
+     *     tags={"Users"},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(ref="#/components/schemas/ChangePasswordRequest")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Password changed successfully"
+     *     ),
+     *      @OA\Response(
+     *          response=422,
+     *          description="Validation error"
+     *      )
+     * )
+     */
+    public function changePassword(ChangePasswordRequest $request): JsonResponse
+    {
+        $this->userService->changePassword($request->validated());
+        return $this->successResponseWithMessage('Password changed successfully');
     }
 }

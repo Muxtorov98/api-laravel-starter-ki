@@ -5,6 +5,7 @@ namespace App\Models;
 use Database\Factories\UserFactory;
 use Eloquent;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Notifications\DatabaseNotificationCollection;
@@ -98,5 +99,22 @@ class User extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims(): array
     {
         return [];
+    }
+
+    public function roles():  BelongsToMany
+    {
+        return $this->belongsToMany(Role::class);
+    }
+
+    public function hasRole($roleName): bool
+    {
+        return $this->roles()->where('name', $roleName)->exists();
+    }
+
+    public function hasPermission($permissionName): bool
+    {
+        return $this->roles()->whereHas('permissions', function ($query) use ($permissionName) {
+            $query->where('name', $permissionName);
+        })->exists();
     }
 }

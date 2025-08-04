@@ -87,4 +87,12 @@ trait ApiResponse
     {
         return $this->errorResponse($message, Response::HTTP_UNPROCESSABLE_ENTITY);
     }
+
+    /**
+     *  return a 200-success message response
+     */
+    public function successResponseWithMessage($message, $code = Response::HTTP_OK): JsonResponse
+    {
+        return $this->successResponse($message, $code);
+    }
 }

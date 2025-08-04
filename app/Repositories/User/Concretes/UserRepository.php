@@ -68,4 +68,9 @@ class UserRepository extends QueryableRepository implements UserRepositoryInterf
     {
         return ['id', 'name', 'email'];
     }
+
+    public function getUserByUsername(string $username): ?User
+    {
+        return $this->model->where('username', $username)->first();
+    }
 }
